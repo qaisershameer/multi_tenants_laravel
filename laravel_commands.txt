@@ -1,0 +1,34 @@
+laravel new MultiTenant
+composer require laravel/breeze
+php artisan breeze:install		blade		No	0
+npm run dev
+php artisan migrate:fresh
+php artisan serve
+register a new user	for check breeze working correctly
+
+composer require stancl/tenancy
+php artisan tenancy:install
+php artisan migrate
+
+create tenant mode (paste below code in new file Tenant.Php in app->Models Folder)
+<?php
+
+namespace App\Models;
+
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use Stancl\Tenancy\Contracts\TenantWithDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Concerns\HasDomains;
+
+class Tenant extends BaseTenant implements TenantWithDatabase
+{
+    use HasDatabase, HasDomains;
+}
+
+create Tenant Button for App Owner (Super Admin) 	resource -> views -> dashboard.blade.php
+change primary button to btn-link	type=href => "/" home page link
+add Tennant/Add Client Button on Owner Dashboard
+
+php artisan make:controller TenantController -r --model=Tenant		-r means resources like CRUD  model for use Model Table from database
+
+
